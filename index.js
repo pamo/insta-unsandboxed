@@ -8,24 +8,34 @@ const storage = new Client.CookieFileStorage(`${__dirname}/config/${someUser}.js
 const _ = require('underscore');
 const Promise = require('bluebird');
 
-let session = {};
-const getUserFeed = (accountId) => {
-  const feed = new Client.Feed.UserMedia(session, accountId);
-  Promise.map(_.range(0, 20), () => {
-      return feed.get();
-    })
-    .then((results) => {
-      let media = _.flatten(results);
-      const urls = _.map(media, (medium) => {
-        const images = medium._params.images;
-        return _.last(images)
-      });
-      console.log(urls);
-    })
+let session;
+
+const getUserFeed = (session) => {
+  return session.getAccount().then((accountId) => {
+    const feed = new Client.Feed.UserMedia(session, accountId);
+
+    Promise.map(_.range(0, 20), () => {
+        return feed.get();
+      })
+      .then((results) => {
+        let media = _.flatten(results);
+        const urls = _.map(media, (medium) => {
+          const images = medium._params.images;
+          return _.last(images)
+        });
+        return urls;
+      })
+  });
 };
 
-Client.Session.create(device, storage, someUser, pass)
-  .then((resolvedSession) => {
-    session = resolvedSession;
-    session.getAccountId().then(getUserFeed);
-  });
+const connect = () => {
+  return Client.Session.create(device, storage, someUser, pass)
+    .then((resolvedSession) => {
+      return resolvedSession;
+    });
+};
+
+module.exports = {
+  connect,
+  getUserFeed
+};
