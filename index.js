@@ -7,24 +7,17 @@ const device = new Client.Device(someUser);
 const storage = new Client.CookieFileStorage(`${__dirname}/config/${someUser}.json`);
 const _ = require('underscore');
 const Promise = require('bluebird');
+const limit = 10;
 
 let session;
 
 const getUserFeed = (session) => {
-  return session.getAccount().then((accountId) => {
-    const feed = new Client.Feed.UserMedia(session, accountId);
+  return session.getAccountId().then((id) => new Client.Feed.UserMedia(session, id, limit));
+};
 
-    Promise.map(_.range(0, 20), () => {
-        return feed.get();
-      })
-      .then((results) => {
-        let media = _.flatten(results);
-        const urls = _.map(media, (medium) => {
-          const images = medium._params.images;
-          return _.last(images)
-        });
-        return urls;
-      })
+const getMedias = (userFeed) => {
+  return userFeed.all().then((medias) => {
+    return _.forEach(medias, (medium) => { medium.Media });
   });
 };
 
@@ -37,5 +30,6 @@ const connect = () => {
 
 module.exports = {
   connect,
-  getUserFeed
+  getUserFeed,
+  getMedias
 };
