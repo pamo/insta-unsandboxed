@@ -7,17 +7,17 @@ const device = new Client.Device(someUser);
 const storage = new Client.CookieFileStorage(`${__dirname}/config/${someUser}.json`);
 const _ = require('underscore');
 const Promise = require('bluebird');
-const limit = 10;
 
-let session;
-
-const getUserFeed = (session) => {
-  return session.getAccountId().then((id) => new Client.Feed.UserMedia(session, id, limit));
+const getUserFeed = (session, limit) => {
+  return session.getAccountId().then((id) => new Client.Feed.UserMedia(session, id, limit).all());
 };
 
-const getMedias = (userFeed) => {
-  return userFeed.all().then((medias) => {
-    return _.forEach(medias, (medium) => { medium.Media });
+const getMediaStartingWith = (userFeed, query) => {
+  return new Promise((resolve) => {
+    let data = _.filter(userFeed, (post) => {
+      return post.getParams().caption.startsWith(query);
+    });
+    resolve(data);
   });
 };
 

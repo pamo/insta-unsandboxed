@@ -8,7 +8,7 @@ describe('Connect with Private API', () => {
   let api;
 
   beforeEach(function() {
-    api = require('../index.js');
+    api = require('../api.js');
   });
 
   it('should have a session', function(done) {
@@ -21,18 +21,24 @@ describe('Connect with Private API', () => {
 
   it('should get authenticated user feed', function(done) {
     api.connect().then((resolvedSession) => resolvedSession).then((session) => {
-      api.getUserFeed(session).then((feed) => {
-        expect(feed).to.be.instanceOf(Client.Feed.UserMedia);
+      api.getUserFeed(session, 1).then((feed) => {
+        expect(feed).to.be.instanceOf(Array);
+        expect(feed[0]).to.be.instanceOf(Client.Media);
         done();
       });
     });
   });
 
-  it('should get all user media', function(done) {
+  it('should get all user media starting with a query', function(done) {
     api.connect().then((resolvedSession) => resolvedSession).then((session) => {
-      api.getUserFeed(session).then((feed) => {
-        api.getMedias(feed).then((medias) => {
+      api.getUserFeed(session, 1).then((feed) => {
+        const query = 'Café Fronts';
+        api.getMedias(feed, query).then((medias) => {
           expect(medias).to.exist;
+          medias.forEach((medium) => {
+            const caption = medium.getParams().caption;
+            expect(caption).to.contain(query);
+          });
           done();
         });
       });
