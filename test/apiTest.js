@@ -33,7 +33,7 @@ describe('Connect with Private API', () => {
     api.connect().then((resolvedSession) => resolvedSession).then((session) => {
       api.getUserFeed(session, 1).then((feed) => {
         const query = 'Café Fronts';
-        api.getMedias(feed, query).then((medias) => {
+        api.getMediaStartingWith(feed, query).then((medias) => {
           expect(medias).to.exist;
           medias.forEach((medium) => {
             const caption = medium.getParams().caption;

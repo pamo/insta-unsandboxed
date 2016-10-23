@@ -8,7 +8,7 @@ const storage = new Client.CookieFileStorage(`${__dirname}/config/${someUser}.js
 const _ = require('underscore');
 const Promise = require('bluebird');
 
-const getUserFeed = (session, limit) => {
+const getUserFeed = (session, limit = null) => {
   return session.getAccountId().then((id) => new Client.Feed.UserMedia(session, id, limit).all());
 };
 
@@ -31,5 +31,5 @@ const connect = () => {
 module.exports = {
   connect,
   getUserFeed,
-  getMedias
+  getMediaStartingWith
 };
