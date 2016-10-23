@@ -7,6 +7,7 @@ const device = new Client.Device(someUser);
 const storage = new Client.CookieFileStorage(`${__dirname}/config/${someUser}.json`);
 const _ = require('underscore');
 const Promise = require('bluebird');
+const access = require('safe-access');
 
 const getUserFeed = (session, limit = null) => {
   return session.getAccountId().then((id) => new Client.Feed.UserMedia(session, id, limit).all());
@@ -15,7 +16,9 @@ const getUserFeed = (session, limit = null) => {
 const getMediaStartingWith = (userFeed, query) => {
   return new Promise((resolve) => {
     let data = _.filter(userFeed, (post) => {
-      return post.getParams().caption.startsWith(query);
+      const caption = access(post.getParams(), 'caption');
+      return caption && caption.startsWith(query);
+
     });
     resolve(data);
   });

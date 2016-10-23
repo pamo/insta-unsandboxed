@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "instagram-private-api": "^0.5.0"
+    "instagram-private-api": "^0.5.0",
+    "safe-access": "^0.1.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
