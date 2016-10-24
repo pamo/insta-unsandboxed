@@ -15,10 +15,10 @@ const getUserFeed = (session, limit = null) => {
 
 const getMediaStartingWith = (userFeed, query) => {
   return new Promise((resolve) => {
-    let data = _.filter(userFeed, (post) => {
-      const caption = access(post.getParams(), 'caption');
+    let data = userFeed.map((post) => (post.getParams()))
+    .filter((post) => {
+      const caption = access(post, 'caption');
       return caption && caption.startsWith(query);
-
     });
     resolve(data);
   });

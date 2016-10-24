@@ -36,7 +36,7 @@ describe('Connect with Private API', () => {
         api.getMediaStartingWith(feed, query).then((medias) => {
           expect(medias).to.exist;
           medias.forEach((medium) => {
-            const caption = medium.getParams().caption;
+            const caption = medium.caption;
             expect(caption).to.contain(query);
           });
           done();
