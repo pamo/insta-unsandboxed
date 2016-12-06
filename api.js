@@ -6,6 +6,7 @@ const Client = require('instagram-private-api').V1;
 const device = new Client.Device(someUser);
 const storage = new Client.CookieFileStorage(`${__dirname}/config/${someUser}.json`);
 const _ = require('underscore');
+const pick = require('lodash/pick');
 const Promise = require('bluebird');
 const access = require('safe-access');
 
@@ -19,8 +20,8 @@ const getMediaStartingWith = (userFeed, query) => {
     .filter((post) => {
       const caption = access(post, 'caption');
       return caption && caption.startsWith(query);
-    });
-    resolve(data);
+    }).map((matched) => (pick(matched, ['id', 'images', 'originalWidth', 'mediaType', 'caption', 'location', 'takenAt'])));
+    resolve(JSON.stringify(data));
   });
 };
 
