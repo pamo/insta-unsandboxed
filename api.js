@@ -9,6 +9,18 @@ const _ = require('underscore');
 const pick = require('lodash/pick');
 const Promise = require('bluebird');
 const access = require('safe-access');
+const database = require('./datafire');
+
+const sanitizeUndefinedProps = (object) => (JSON.parse(JSON.stringify(object)));
+const mapPhotoToRef = (ref, photo) => {
+  return ref.child(photo.id).set({
+    timestamp: photo.takenAt,
+    width: photo.originalWidth,
+    images: sanitizeUndefinedProps(photo.images),
+    caption: photo.caption,
+    location: sanitizeUndefinedProps(photo.location)
+  });
+};
 
 const getUserFeed = (session, limit = null) => {
   return session.getAccountId().then((id) => new Client.Feed.UserMedia(session, id, limit).all());
@@ -16,11 +28,16 @@ const getUserFeed = (session, limit = null) => {
 
 const getMediaStartingWith = (userFeed, query) => {
   return new Promise((resolve) => {
+    const photosRef = database.ref('photos');
     let data = userFeed.map((post) => (post.getParams()))
-    .filter((post) => {
-      const caption = access(post, 'caption');
-      return caption && caption.startsWith(query);
-    }).map((matched) => (pick(matched, ['id', 'images', 'originalWidth', 'mediaType', 'caption', 'location', 'takenAt'])));
+      .filter((post) => {
+        const caption = access(post, 'caption');
+        return caption && caption.startsWith(query);
+      }).map((matched) => {
+        const photo = pick(matched, ['id', 'images', 'originalWidth', 'caption', 'location', 'takenAt'])
+        mapPhotoToRef(photosRef, photo);
+        return photo;
+      });
     resolve(JSON.stringify(data));
   });
 };

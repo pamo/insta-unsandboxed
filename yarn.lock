@@ -2,6 +2,16 @@
 # yarn lockfile v1
 
 
+"@types/jsonwebtoken@^7.1.33":
+  version "7.1.33"
+  resolved "https://registry.yarnpkg.com/@types/jsonwebtoken/-/jsonwebtoken-7.1.33.tgz#e2fab98787b53c04d252471c747f1ba22a5965d7"
+  dependencies:
+    "@types/node" "*"
+
+"@types/node@*":
+  version "6.0.51"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.51.tgz#84cbf25111516ec9304d0b61469dc0fa9d12ba32"
+
 abbrev@1:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.0.9.tgz#91b4792588a7738c25f35dd6f63752a2f8776135"
@@ -211,10 +221,6 @@ diff@1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-1.4.0.tgz#7f28d2eb9ee7b15a97efd89ce63dcfdaa3ccbabf"
 
-dom-storage@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/dom-storage/-/dom-storage-2.0.2.tgz#ed17cbf68abd10e0aef8182713e297c5e4b500b0"
-
 ecc-jsbn@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.1.tgz#0fc73a9ed5f0d53c38193398523ef7e543777505"
@@ -254,15 +260,13 @@ faye-websocket@0.9.3:
   dependencies:
     websocket-driver ">=0.5.1"
 
-firebase@^3.5.1:
-  version "3.6.3"
-  resolved "https://registry.yarnpkg.com/firebase/-/firebase-3.6.3.tgz#ab9f80fd133ae824cc03f9ea72dd33bf4bb30002"
+firebase-admin@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/firebase-admin/-/firebase-admin-4.0.4.tgz#051a5286699837a1eaf9e3eafec99c123131663a"
   dependencies:
-    dom-storage "2.0.2"
+    "@types/jsonwebtoken" "^7.1.33"
     faye-websocket "0.9.3"
     jsonwebtoken "7.1.9"
-    rsvp "3.2.1"
-    xmlhttprequest "1.8.0"
 
 forever-agent@~0.6.1:
   version "0.6.1"
@@ -289,10 +293,6 @@ generate-object-property@^1.1.0:
   resolved "https://registry.yarnpkg.com/generate-object-property/-/generate-object-property-1.2.0.tgz#9c0e1c40308ce804f4783618b937fa88f99d50d0"
   dependencies:
     is-property "^1.0.0"
-
-geofire@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/geofire/-/geofire-4.1.2.tgz#031632e757605e9b885bd6e8febaef7a0e85869f"
 
 getpass@^0.1.1:
   version "0.1.6"
@@ -646,13 +646,9 @@ moment@2.x.x:
   version "2.17.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.17.1.tgz#fed9506063f36b10f066c8b59a144d7faebe1d82"
 
-ms@0.7.1:
+ms@0.7.1, ms@^0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.1.tgz#9cd13c03adbff25b65effde7ce864ee952017098"
-
-ms@^0.7.1:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.2.tgz#ae25cf2512b3885a1d95d7f037868d8431124765"
 
 node-cache@^3.0.0:
   version "3.2.1"
@@ -736,10 +732,6 @@ request@^2.34, request@^2.64.0:
     tough-cookie "~2.3.0"
     tunnel-agent "~0.4.1"
     uuid "^3.0.0"
-
-rsvp@3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-3.2.1.tgz#07cb4a5df25add9e826ebc67dcc9fd89db27d84a"
 
 safe-access@^0.1.0:
   version "0.1.0"
@@ -910,10 +902,6 @@ winston@0.8.x:
 wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
-
-xmlhttprequest@1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
 
 xtend@^4.0.0, xtend@^4.0.1:
   version "4.0.1"
