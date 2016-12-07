@@ -1,19 +1,33 @@
 const api = require('./api');
-const fs = require('fs');
-const path = require('path');
+const database = require('./datafire');
+const photosRef = database.ref('photos');
+
+const sanitizeUndefinedProps = (object) => (JSON.parse(JSON.stringify(object)));
+const mapPhotoToRef = (ref, photo) => {
+  return ref.child(photo.id).set({
+    timestamp: photo.takenAt,
+    width: photo.originalWidth,
+    images: sanitizeUndefinedProps(photo.images),
+    caption: photo.caption,
+    location: sanitizeUndefinedProps(photo.location)
+  }, (error) => {
+    if (error) {
+      return console.log(`Data could not be saved because ${error}`);
+    }
+    console.log(`Photo ${photo.location.title} saved to firebase`);
+  });
+};
 
 api.connect()
   .then(api.getUserFeed)
-  .then((feed) => {
-    return api.getMediaStartingWith(feed, 'Café Fronts');
-  })
-  .then((response) => {
-    const temporaryPath = path.join(__dirname, 'tmp/results.json');
-    return fs.writeFile(temporaryPath, response, (err) => {
-      if (err) {
-        return console.log(err);
-      }
-      console.log(`The file was saved to ${temporaryPath}!`);
+  .then((feed) => (api.getMediaStartingWith(feed, 'Café Fronts')))
+  .then(photos => {
+    const photosPromises = photos.map(photo => {
+      return mapPhotoToRef(photosRef, photo);
+    });
+
+    Promise.all(photosPromises).then(() => {
+      console.log('Firebase update done');
       process.exit();
     });
   });
