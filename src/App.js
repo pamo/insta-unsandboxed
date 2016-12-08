@@ -24,7 +24,7 @@ class App extends Component {
       const key = `photo-${index}`;
       const photoSrc = findLast(photoData.images, image => (image.width >= 300));
       this.state.elementHeights.push(photoSrc.height);
-      return this.state.photos.push(<Photo location={photoData.location} link={photoData.link} src={photoSrc.url} title={photoData.location.title} index={index} key={key} />);
+      return this.state.photos.push(<Photo location={photoData.location} link={photoData.link} src={photoSrc.url} title={photoData.location.title} images={photoData.images} index={index} key={key} />);
     });
   }
   render() {

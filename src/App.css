@@ -37,3 +37,11 @@
   background: #F8F8F8;
   line-height: 0;
 }
+
+@media (max-width: 375px) {
+  .instagram-photo img {
+    max-width: 300px;
+    max-width: -webkit-calc(100% - 0.5em);
+    max-width: calc(100% - 0.5em);
+  }
+}
