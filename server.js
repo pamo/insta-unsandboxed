@@ -9,6 +9,7 @@ const mapPhotoToRef = (ref, photo) => {
     width: photo.originalWidth,
     images: sanitizeUndefinedProps(photo.images),
     caption: photo.caption,
+    link: `https://www.instagram.com/p/${photo.code}/`,
     location: sanitizeUndefinedProps(photo.location)
   }, (error) => {
     if (error) {

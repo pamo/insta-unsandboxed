@@ -21,7 +21,7 @@ const getMediaStartingWith = (userFeed, query) => {
         const caption = access(post, 'caption');
         return caption && caption.startsWith(query);
       })
-      .map((matched) => (pick(matched, ['id', 'images', 'originalWidth', 'caption', 'location', 'takenAt'])));
+      .map((matched) => (pick(matched, ['id', 'images', 'originalWidth', 'caption', 'location', 'takenAt', 'code'])));
 
     resolve(foundPhotos);
   });
