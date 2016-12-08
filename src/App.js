@@ -27,6 +27,7 @@ class App extends Component {
     return (<div className='App'>
         <div className='App-header'>
           <h2>Café Fronts</h2>
+          <p>A <a href="https://likescoffee.com/cafe-fronts-photo-project" target="_blank" rel="noopener noreferrer">pet photo project</a> by <a href="https://instagram.com/pmocampo" target="_blank" rel="noopener noreferrer">@pmocampo</a></p>
         </div>
         <Infinite
           elementHeight={400}

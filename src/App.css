@@ -5,6 +5,11 @@
   vertical-align: baseline;
 }
 
+a {
+  color: #01a1dd;
+  transition: all .2s ease;
+}
+
 .App {
   text-align: center;
 }
@@ -14,12 +19,14 @@
   padding: 1em;
   color: white;
 }
+
 .scroll-container {
   width: 80%;
   width: -webkit-calc(80% - 2px);
   width: calc(80% - 2px);
   margin: 0 auto;
 }
+
 .instagram-photo {
   background: #FFF;
   width: 99.375%;
