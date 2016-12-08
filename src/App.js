@@ -1,4 +1,4 @@
-import InfiniteGrid from 'react-infinite-grid';
+import Infinite from 'react-infinite';
 import React, { Component } from 'react';
 import findLast from 'lodash.findlast';
 import './App.css';
@@ -10,18 +10,20 @@ class App extends Component {
     super(props);
     this.state = {
       photos: [],
+      elementHeights: [],
       gridHeight: props.gridHeight
     };
   }
   componentDidMount(x,y,z){
     this.setState({
-      gridHeight:`${window.innerHeight}px`
+      gridHeight: window.innerHeight
     });
   }
   componentWillMount () {
     InstagramData.map((photoData, index) => {
       const key = `photo-${index}`;
       const photoSrc = findLast(photoData.images, image => (image.width >= 300));
+      this.state.elementHeights.push(photoSrc.height);
       return this.state.photos.push(<Photo src={photoSrc.url} title={photoData.location.title} index={index} key={key} />);
     });
   }
@@ -30,12 +32,13 @@ class App extends Component {
         <div className='App-header'>
           <h2>Café Fronts</h2>
         </div>
-        <InfiniteGrid
-          padding={0}
-          buffer={0}
-          wrapperHeight={this.state.gridHeight}
-          entries={this.state.photos}
-        />
+        <Infinite
+          elementHeight={this.state.elementHeights}
+          containerHeight={this.state.gridHeight}
+          className='scroll-container'
+          useWindowAsScrollContainer>
+        {this.state.photos}
+        </Infinite>
         </div>);
   }
 }
