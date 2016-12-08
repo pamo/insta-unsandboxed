@@ -4,16 +4,19 @@ const api = require('./api');
 const database = require('./datafire');
 const photosRef = database.ref('photos');
 
+const transformPhotoData = (data) => ({
+  id: data.id,
+  timestamp: data.takenAt,
+  width: data.originalWidth,
+  images: sanitizeUndefinedProps(data.images),
+  caption: data.caption,
+  link: `https://www.instagram.com/p/${data.code}/`,
+  location: sanitizeUndefinedProps(data.location)
+});
+
 const sanitizeUndefinedProps = (object) => (JSON.parse(JSON.stringify(object)));
 const mapPhotoToRef = (ref, photo) => {
-  return ref.child(photo.id).set({
-    timestamp: photo.takenAt,
-    width: photo.originalWidth,
-    images: sanitizeUndefinedProps(photo.images),
-    caption: photo.caption,
-    link: `https://www.instagram.com/p/${photo.code}/`,
-    location: sanitizeUndefinedProps(photo.location)
-  }, (error) => {
+  return ref.child(photo.id).set(photo, (error) => {
     if (error) {
       return console.log(`Data could not be saved because ${error}`);
     }
@@ -34,12 +37,16 @@ api.connect()
   .then(api.getUserFeed)
   .then((feed) => (api.getMediaStartingWith(feed, 'Café Fronts')))
   .then(photos => {
+    let transformedCollection = [];
     const photosPromises = photos.map(photo => {
-      return mapPhotoToRef(photosRef, photo);
+      const transformedPhoto = transformPhotoData(photo);
+      console.log(transformedPhoto);
+      transformedCollection.push(transformedPhoto);
+      return mapPhotoToRef(photosRef, transformedPhoto);
     });
     Promise.all(photosPromises).then(() => {
       console.log('Firebase update done');
       process.exit();
     });
-    saveToTempFile(photos);
+    saveToTempFile(transformedCollection);
   });
