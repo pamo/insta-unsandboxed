@@ -15,13 +15,15 @@
     "firebase-admin": "^4.0.4",
     "instagram-private-api": "^0.5.0",
     "lodash": "^4.16.4",
-    "safe-access": "^0.1.0",
+    "lodash.findlast": "^4.6.0",
     "react": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "react-dom": "^15.4.1",
+    "react-infinite-grid": "^0.4.0",
+    "safe-access": "^0.1.0"
   },
   "devDependencies": {
-    "react-scripts": "0.8.2",
     "chai": "^3.5.0",
-    "mocha": "^3.1.2"
+    "mocha": "^3.1.2",
+    "react-scripts": "0.8.2"
   }
 }
