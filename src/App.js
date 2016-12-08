@@ -1,6 +1,5 @@
 import Infinite from 'react-infinite';
 import React, { Component } from 'react';
-import findLast from 'lodash.findlast';
 import './App.css';
 import Photo from './Photo.js';
 import InstagramData from '../tmp/results.json';
@@ -10,7 +9,6 @@ class App extends Component {
     super(props);
     this.state = {
       photos: [],
-      elementHeights: [],
       gridHeight: props.gridHeight
     };
   }
@@ -22,9 +20,7 @@ class App extends Component {
   componentWillMount () {
     InstagramData.map((photoData, index) => {
       const key = `photo-${index}`;
-      const photoSrc = findLast(photoData.images, image => (image.width >= 300));
-      this.state.elementHeights.push(photoSrc.height);
-      return this.state.photos.push(<Photo location={photoData.location} link={photoData.link} src={photoSrc.url} title={photoData.location.title} images={photoData.images} index={index} key={key} />);
+      return this.state.photos.push(<Photo location={photoData.location} link={photoData.link} title={photoData.location.title} images={photoData.images} index={index} key={key} />);
     });
   }
   render() {
@@ -33,7 +29,7 @@ class App extends Component {
           <h2>Café Fronts</h2>
         </div>
         <Infinite
-          elementHeight={this.state.elementHeights}
+          elementHeight={400}
           containerHeight={this.state.gridHeight}
           className='scroll-container'
           useWindowAsScrollContainer>

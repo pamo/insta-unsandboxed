@@ -1,14 +1,23 @@
 import React from 'react';
+import findLast from 'lodash.findlast';
+
 const toSecureUrl = (url) => (url.replace(/^http/, 'https'));
-const srcSet = (defaultImage, images) => (`${defaultImage} 1x, ${images[1].url} 2x,
-    ${images[0].url} 3x, ${images[0].url} 4x`);
+const srcSet = (images) => {
+  const secureImageUrls = images.map(image => toSecureUrl(image.url));
+  const defaultImage = toSecureUrl(findLast(images, image => (image.width >= 300)).url);
+  return {
+    fullSet: `${defaultImage} 1x, ${secureImageUrls[1]} 2x, ${secureImageUrls[0]} 3x, ${secureImageUrls[0]} 4x`,
+    default: defaultImage
+  };
+};
+
 const Photo = (props) => (<div className="instagram-photo">
     <h3>{props.title}</h3>
     <h4>{props.location.city}</h4>
     <a href={props.link} target="_blank" rel="noreferrer noopener">
     <img
-    src={toSecureUrl(props.src)}
-    srcSet={srcSet(props.src, props.images)}
+    src={srcSet(props.images).default}
+    srcSet={srcSet(props.images).fullSet}
     alt={props.title} /></a>
     </div>);
 
