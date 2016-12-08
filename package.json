@@ -2,21 +2,25 @@
   "name": "insta-unsandboxed",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "mocha"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "server": "node server.js"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "config": "^1.24.0",
     "firebase-admin": "^4.0.4",
     "instagram-private-api": "^0.5.0",
     "lodash": "^4.16.4",
-    "safe-access": "^0.1.0"
+    "safe-access": "^0.1.0",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
   },
   "devDependencies": {
+    "react-scripts": "0.8.2",
     "chai": "^3.5.0",
     "mocha": "^3.1.2"
   }
