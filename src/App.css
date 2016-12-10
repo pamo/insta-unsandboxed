@@ -42,7 +42,8 @@ a {
 
 .instagram-photo img {
   background: #F8F8F8;
-  line-height: 0;
+  display: block;
+  margin: .25em auto;
 }
 
 @media (max-width: 375px) {

@@ -13,12 +13,13 @@ const srcSet = (images) => {
 
 const Photo = (props) => (<div className="instagram-photo">
     <h3>{props.title}</h3>
-    <h4>{props.location.city}</h4>
+    <h4>{props.caption[1]}</h4>
     <a href={props.link} target="_blank" rel="noreferrer noopener">
     <img
     src={srcSet(props.images).default}
     srcSet={srcSet(props.images).fullSet}
     alt={props.title} /></a>
+    <em>{props.caption[props.caption.length-2]}.</em>
     </div>);
 
 export default Photo;
