@@ -3,7 +3,7 @@ const chai = require('chai');
 const expect = chai.expect;
 const Client = require('instagram-private-api').V1;
 
-describe('Connect with Private API', () => {
+describe.skip('Connect with Private API', () => {
 
   let api;
 
@@ -44,6 +44,4 @@ describe('Connect with Private API', () => {
       });
     });
   });
-
-
 });
