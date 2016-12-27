@@ -14,18 +14,16 @@ const saveToTempFile = (photos) => {
 
 api.connect()
   .then(api.getUserFeed)
-  .then((feed) => (api.getMediaStartingWith(feed, 'Café Fronts')))
+  .then(feed => (api.getMediaStartingWith(feed, 'Café Fronts')))
   .then(photos => {
-    let transformedCollection = [];
-    const photosPromises = photos.map(photo => {
-      const transformedPhoto = parser.transformResponseProperties(photo);
-      console.log(transformedPhoto);
-      transformedCollection.push(transformedPhoto);
-      return firebase.database().savePhoto(transformedPhoto);
-    });
+    console.log('Transforming and saving feed to Firebase..');
+    const transformedCollection = photos.map(parser.transformResponseProperties);
+    const photosPromises = transformedCollection.map(firebase.savePhoto);
+
     Promise.all(photosPromises).then(() => {
       console.log('Firebase update done');
       process.exit();
     });
+
     saveToTempFile(transformedCollection);
   });

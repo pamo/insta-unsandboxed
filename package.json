@@ -9,6 +9,7 @@
     "test": "react-scripts test --env=jsdom",
     "deploy": "yarn build && firebase deploy",
     "eject": "react-scripts eject",
+    "debug": "node --inspect server.js",
     "server": "node server.js"
   },
   "dependencies": {
